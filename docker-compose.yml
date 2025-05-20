@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    container_name: rul-prediction-service
+    ports:
+      - "15000:15000"
+    volumes:
+      - ./:/app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  default:
+    driver: bridge
