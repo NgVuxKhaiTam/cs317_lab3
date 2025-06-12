@@ -74,12 +74,7 @@ cs317_lab3/
 2. Build and start all services:
 
    ```bash
-   docker-compose up -d --build
-   ```
-3. Verify with:
-
-   ```bash
-   docker ps
+   docker-compose up --build
    ```
 
 ## Usage
