@@ -1,127 +1,96 @@
-# Remaining Useful Life (RUL) Prediction Service
+# CS317 Lab3: RUL Prediction Service with Monitoring & Logging
 
-Đây là hệ thống dự đoán tuổi thọ còn lại (RUL) cho thiết bị sử dụng mô hình học máy LSTM và được triển khai thông qua FastAPI.
+This repository implements a Remaining Useful Life (RUL) prediction API using FastAPI and TensorFlow, coupled with an end-to-end observability stack (Prometheus, Grafana, Alertmanager, Filebeat).
 
-## Môi trường yêu cầu
+## Table of Contents
 
-- Python 3.10
-- Docker và Docker Compose (nếu muốn triển khai với Docker)
+* [Features](#features)
+* [Prerequisites](#prerequisites)
+* [Repository Structure](#repository-structure)
+* [Configuration](#configuration)
+* [Building & Running](#building--running)
+* [Usage](#usage)
+* [Monitoring & Dashboards](#monitoring--dashboards)
+* [Alerting](#alerting)
+* [Troubleshooting](#troubleshooting)
 
-## Cài đặt và sử dụng
+## Features
 
-### Phương pháp 1: Sử dụng môi trường ảo Python
+* FastAPI service for RUL prediction
+* TensorFlow model with pre-trained weights
+* Prometheus instrumentation (API, model, server)
+* Grafana dashboards (provisioned automatically)
+* Alertmanager alerts to Telegram
+* Unified logging (stdout, stderr, syslog, file, Filebeat)
 
-1. **Tạo môi trường ảo**:
+## Prerequisites
+
+* Docker & Docker Compose
+* Telegram bot token and valid chat ID
+* (Optional) Elasticsearch or Loki for logs
+
+## Repository Structure
+
+```text
+cs317_lab3/
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── main.py
+├── logging_config.py
+├── model.py
+├── preprocess_data.py
+├── train_FD004.txt
+├── monitoring/
+│   ├── prometheus/
+│   │   ├── prometheus.yml
+│   │   └── alert_rules.yml
+│   ├── alertmanager/
+│   │   └── alertmanager.yml
+│   ├── grafana/
+│   │   └── provisioning/
+│   │       └── datasources/
+│   │           └── prometheus.yml
+│   └── filebeat/
+│       └── filebeat.yml
+├── logs/                # host-mounted logs
+└── README.md            
+```
+
+## Configuration
+
+1. Edit `monitoring/alertmanager/alertmanager.yml` and set your Telegram `<YOUR_BOT_TOKEN>` and `<CHAT_ID>`.
+2. Review Prometheus configs in `monitoring/prometheus/`.
+3. Verify Grafana provisioning under `monitoring/grafana/provisioning/datasources/`.
+4. Adjust logging settings in `logging_config.py` and `monitoring/filebeat/filebeat.yml`.
+
+## Building & Running
+
+1. From project root:
 
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # Trên Linux/Mac
-   # hoặc
-   venv\Scripts\activate  # Trên Windows
+   cd cs317_lab3
    ```
-
-2. **Cài đặt các thư viện phụ thuộc**:
+2. Build and start all services:
 
    ```bash
-   pip install -r requirements.txt
+   docker-compose up -d --build
    ```
-
-3. **Chạy ứng dụng**:
-   ```bash
-   uvicorn main:app --host 0.0.0.0 --port 15000
-   ```
-
-### Phương pháp 2: Sử dụng Docker
-
-1. **Xây dựng và khởi chạy container với Docker Compose**:
+3. Verify with:
 
    ```bash
-   docker-compose up --build
+   docker ps
    ```
 
-   Hoặc chạy ở chế độ nền:
+## Usage
 
-   ```bash
-   docker-compose up --build -d
-   ```
+### Health Check
 
-2. **Dừng container**:
-   ```bash
-   docker-compose down
-   ```
+```bash
+curl http://localhost:15000/
+```
 
-### Phương pháp 3: Xây dựng và chạy Docker image thủ công
-
-1. **Xây dựng Docker image**:
-
-   ```bash
-   docker build -t rul-prediction-service .
-   ```
-
-2. **Chạy container**:
-   ```bash
-   docker run -p 15000:15000 --name rul-prediction-service rul-prediction-service
-   ```
-
-## Sử dụng API
-
-Sau khi khởi chạy, API có thể được truy cập tại địa chỉ: `http://localhost:15000`
-
-### Endpoints
-
-1. **Kiểm tra trạng thái**:
-
-   ```
-   GET /
-   ```
-
-   Trả về thông báo "Hellow World" nếu API đang chạy.
-
-2. **Dự đoán RUL**:
-
-   ```
-   POST /predict
-   ```
-
-   Body request mẫu (JSON):
-
-   ```json
-   {
-   	"sensor_2": 445.0,
-   	"sensor_3": 549.68,
-   	"sensor_4": 1343.43,
-   	"sensor_7": 1112.93,
-   	"sensor_8": 3.91,
-   	"sensor_9": 5.7,
-   	"sensor_11": 137.36,
-   	"sensor_12": 2211.86,
-   	"sensor_13": 8311.32,
-   	"sensor_14": 1.01,
-   	"sensor_15": 41.69,
-   	"sensor_17": 129.78,
-   	"sensor_20": 2387.99,
-   	"sensor_21": 8074.83
-   }
-   ```
-
-## Cấu trúc dự án
-
-- `main.py`: Mã nguồn chính của API FastAPI
-- `model.py`: Định nghĩa mô hình LSTM
-- `preprocess_data.py`: Mã tiền xử lý dữ liệu
-- `requirements.txt`: Danh sách các thư viện phụ thuộc với phiên bản cụ thể
-- `Dockerfile`: Cấu hình để xây dựng Docker image
-- `docker-compose.yml`: Cấu hình để quản lý container Docker
-- `final_model.weights.h5`: File trọng số đã được huấn luyện của mô hình
-- `train_FD004.txt`: Dữ liệu huấn luyện
-
-## Lưu ý
-
-- Dự án này sử dụng các phiên bản cụ thể của các thư viện để đảm bảo tính tương thích và ổn định. Không nên thay đổi phiên bản các thư viện trong `requirements.txt` trừ khi có lý do đặc biệt.
-- Mô hình đã được huấn luyện sẵn và được lưu trong file `final_model.weights.h5`.
-- API chạy mặc định trên cổng 15000. Có thể thay đổi bằng cách chỉnh sửa file `Dockerfile` và `docker-compose.yml`.
-
-## Hướng dẫn sử dụng API với curl
+### Prediction API
 
 ```bash
 curl -X POST "http://localhost:15000/predict" \
@@ -144,6 +113,48 @@ curl -X POST "http://localhost:15000/predict" \
   }'
 ```
 
-## Video
+### Metrics Endpoint
 
-[![Watch the video](https://drive.google.com/file/d/1b-6QSMeDsWP5ku0DculEdSMrVSiMaQhN/view?usp=sharing)](https://drive.google.com/file/d/1b-6QSMeDsWP5ku0DculEdSMrVSiMaQhN/view?usp=sharing)
+```bash
+curl http://localhost:15000/metrics
+```
+
+### Viewing Logs
+
+* Application: `tail -f logs/app.log`
+* Syslog: `tail -f /var/log/syslog`
+
+## Monitoring & Dashboards
+
+* **Prometheus UI**: [http://localhost:9090](http://localhost:9090)
+* **Grafana UI**: [http://localhost:3000](http://localhost:3000) (admin/admin)
+* Import Node Exporter Dashboard (ID 1860)
+* Import or create API & Model dashboard (JSON at `monitoring/grafana/dashboards/api_model.json`)
+
+## Alerting
+
+* High error rate (>50% in 5m) triggers Telegram alert
+* Low confidence (<0.6 predictions) triggers Telegram alert
+* Manage at Alertmanager UI: [http://localhost:9093](http://localhost:9093)
+
+## Troubleshooting
+
+1. Check rule status: [http://localhost:9090/rules](http://localhost:9090/rules)
+2. Inspect logs:
+
+   ```bash
+   docker logs prometheus
+   docker logs alertmanager
+   docker logs rul-prediction-service
+   ```
+3. Test Telegram API:
+
+   ```bash
+   curl -s 'https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates'
+   curl -s 'https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage?chat_id=<CHAT_ID>&text=hello'
+   ```
+4. Grafana provisioning issues: `docker logs grafana`
+
+---
+
+*README generated to guide deployment and testing of the RUL prediction service with full observability.*

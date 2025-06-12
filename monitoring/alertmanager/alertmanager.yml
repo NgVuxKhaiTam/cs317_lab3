@@ -1,0 +1,18 @@
+route:
+  receiver: 'telegram'
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+
+receivers:
+  - name: 'telegram'
+    webhook_configs:
+      - url: 'https://api.telegram.org/bot7177119306:AAGdOS7Nh1N2KrjmrouGhUjcpBfJSH_IBug/sendMessage'
+        send_resolved: true
+        http_config:
+          json: true
+        body: |
+          {
+            "chat_id": "6682651216",
+            "text": "[{{ .Status }}] {{ .GroupLabels.alertname }} - {{ .Annotations.summary }}"
+          }

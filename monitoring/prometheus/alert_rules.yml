@@ -1,0 +1,29 @@
+groups:
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: |
+          increase(api_requests_total{status=~"5.."}[5m]) / increase(api_requests_total[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Error rate trên API > 50% trong 2 phút"
+
+  - name: model_alerts
+    rules:
+      - alert: SlowInference
+        expr: histogram_quantile(0.99, sum(rate(model_inference_seconds_bucket[5m])) by (le)) > 1
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Inference chậm (99th percentile > 1s)"
+
+      - alert: LowConfidence
+        expr: increase(model_confidence_below_threshold[5m]) > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Có inference với confidence < 0.6"

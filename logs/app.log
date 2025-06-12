@@ -1,0 +1,95 @@
+2025-06-12 06:32:35,613 - ERROR - Error in /predict
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/pandas/core/internals/construction.py", line 939, in _finalize_columns_and_data
+    columns = _validate_or_indexify_columns(contents, columns)
+  File "/usr/local/lib/python3.10/site-packages/pandas/core/internals/construction.py", line 986, in _validate_or_indexify_columns
+    raise AssertionError(
+AssertionError: 26 columns passed, passed data had 19 columns
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/main.py", line 80, in predict
+    input_df = pd.DataFrame([row], columns=['unit_nr','time_cycles','setting_1','setting_2','setting_3'] + ['s_{}'.format(i+1) for i in range(21)])
+  File "/usr/local/lib/python3.10/site-packages/pandas/core/frame.py", line 851, in __init__
+    arrays, columns, index = nested_data_to_arrays(
+  File "/usr/local/lib/python3.10/site-packages/pandas/core/internals/construction.py", line 520, in nested_data_to_arrays
+    arrays, columns = to_arrays(data, columns, dtype=dtype)
+  File "/usr/local/lib/python3.10/site-packages/pandas/core/internals/construction.py", line 845, in to_arrays
+    content, columns = _finalize_columns_and_data(arr, columns, dtype)
+  File "/usr/local/lib/python3.10/site-packages/pandas/core/internals/construction.py", line 942, in _finalize_columns_and_data
+    raise ValueError(err) from err
+ValueError: 26 columns passed, passed data had 19 columns
+2025-06-12 06:35:50,032 - INFO - Inference took 0.223s, RUL=43.60
+2025-06-12 06:48:30,873 - INFO - Inference took 0.198s, RUL=43.60
+2025-06-12 07:07:39,384 - INFO - Inference took 0.238s, RUL=43.68
+2025-06-12 07:07:40,311 - INFO - Inference took 0.059s, RUL=43.68
+2025-06-12 07:07:41,378 - INFO - Inference took 0.057s, RUL=43.68
+2025-06-12 07:07:42,437 - INFO - Inference took 0.064s, RUL=43.68
+2025-06-12 07:07:43,507 - INFO - Inference took 0.061s, RUL=43.68
+2025-06-12 07:07:44,510 - INFO - Inference took 0.059s, RUL=43.68
+2025-06-12 07:07:45,502 - INFO - Inference took 0.060s, RUL=43.68
+2025-06-12 07:07:46,569 - INFO - Inference took 0.062s, RUL=43.68
+2025-06-12 07:07:47,510 - INFO - Inference took 0.059s, RUL=43.68
+2025-06-12 07:07:48,549 - INFO - Inference took 0.063s, RUL=43.68
+2025-06-12 07:07:49,481 - INFO - Inference took 0.059s, RUL=43.68
+2025-06-12 07:07:50,544 - INFO - Inference took 0.058s, RUL=43.68
+2025-06-12 07:07:51,477 - INFO - Inference took 0.061s, RUL=43.68
+2025-06-12 07:07:52,517 - INFO - Inference took 0.057s, RUL=43.68
+2025-06-12 07:07:53,503 - INFO - Inference took 0.056s, RUL=43.68
+2025-06-12 07:07:54,503 - INFO - Inference took 0.069s, RUL=43.68
+2025-06-12 07:07:55,484 - INFO - Inference took 0.067s, RUL=43.68
+2025-06-12 07:07:56,488 - INFO - Inference took 0.068s, RUL=43.68
+2025-06-12 07:07:57,467 - INFO - Inference took 0.056s, RUL=43.68
+2025-06-12 07:07:58,473 - INFO - Inference took 0.081s, RUL=43.68
+2025-06-12 07:07:59,412 - INFO - Inference took 0.059s, RUL=43.68
+2025-06-12 07:08:00,380 - INFO - Inference took 0.057s, RUL=43.68
+2025-06-12 07:08:01,427 - INFO - Inference took 0.059s, RUL=43.68
+2025-06-12 07:08:02,344 - INFO - Inference took 0.056s, RUL=43.68
+2025-06-12 07:08:03,432 - INFO - Inference took 0.058s, RUL=43.68
+2025-06-12 07:08:04,442 - INFO - Inference took 0.078s, RUL=43.68
+2025-06-12 07:08:05,422 - INFO - Inference took 0.059s, RUL=43.68
+2025-06-12 07:08:06,415 - INFO - Inference took 0.072s, RUL=43.68
+2025-06-12 07:08:07,422 - INFO - Inference took 0.070s, RUL=43.68
+2025-06-12 07:08:08,314 - INFO - Inference took 0.071s, RUL=43.68
+2025-06-12 07:10:30,628 - INFO - Inference took 0.075s, RUL=43.60
+2025-06-12 07:10:31,982 - INFO - Inference took 0.059s, RUL=43.60
+2025-06-12 07:10:33,301 - INFO - Inference took 0.057s, RUL=43.60
+2025-06-12 07:10:34,929 - INFO - Inference took 0.074s, RUL=43.60
+2025-06-12 07:10:36,144 - INFO - Inference took 0.071s, RUL=43.60
+2025-06-12 07:10:37,235 - INFO - Inference took 0.074s, RUL=43.60
+2025-06-12 07:10:38,245 - INFO - Inference took 0.074s, RUL=43.60
+2025-06-12 07:10:39,222 - INFO - Inference took 0.081s, RUL=43.60
+2025-06-12 07:10:40,145 - INFO - Inference took 0.069s, RUL=43.60
+2025-06-12 07:10:44,895 - INFO - Inference took 0.057s, RUL=43.60
+2025-06-12 07:10:46,299 - INFO - Inference took 0.058s, RUL=43.60
+2025-06-12 07:10:47,437 - INFO - Inference took 0.071s, RUL=43.60
+2025-06-12 07:10:48,451 - INFO - Inference took 0.070s, RUL=43.60
+2025-06-12 07:10:49,778 - INFO - Inference took 0.061s, RUL=43.60
+2025-06-12 07:10:51,035 - INFO - Inference took 0.073s, RUL=43.60
+2025-06-12 07:10:52,123 - INFO - Inference took 0.072s, RUL=43.60
+2025-06-12 07:10:53,492 - INFO - Inference took 0.058s, RUL=43.60
+2025-06-12 07:10:54,490 - INFO - Inference took 0.057s, RUL=43.60
+2025-06-12 07:10:56,257 - INFO - Inference took 0.068s, RUL=43.60
+2025-06-12 07:10:58,182 - INFO - Inference took 0.076s, RUL=43.60
+2025-06-12 07:10:59,368 - INFO - Inference took 0.062s, RUL=43.60
+2025-06-12 07:11:00,435 - INFO - Inference took 0.069s, RUL=43.60
+2025-06-12 07:11:01,384 - INFO - Inference took 0.066s, RUL=43.60
+2025-06-12 07:11:02,412 - INFO - Inference took 0.062s, RUL=43.60
+2025-06-12 07:11:03,456 - INFO - Inference took 0.061s, RUL=43.60
+2025-06-12 07:11:04,424 - INFO - Inference took 0.069s, RUL=43.60
+2025-06-12 07:11:05,463 - INFO - Inference took 0.058s, RUL=43.60
+2025-06-12 07:11:06,447 - INFO - Inference took 0.062s, RUL=43.60
+2025-06-12 07:11:07,488 - INFO - Inference took 0.061s, RUL=43.60
+2025-06-12 07:11:08,421 - INFO - Inference took 0.057s, RUL=43.60
+2025-06-12 07:11:09,332 - INFO - Inference took 0.058s, RUL=43.60
+2025-06-12 07:11:10,293 - INFO - Inference took 0.063s, RUL=43.60
+2025-06-12 07:11:11,278 - INFO - Inference took 0.064s, RUL=43.60
+2025-06-12 07:11:12,457 - INFO - Inference took 0.061s, RUL=43.60
+2025-06-12 07:11:13,487 - INFO - Inference took 0.059s, RUL=43.60
+2025-06-12 07:11:14,463 - INFO - Inference took 0.078s, RUL=43.60
+2025-06-12 07:11:15,370 - INFO - Inference took 0.062s, RUL=43.60
+2025-06-12 07:11:16,959 - INFO - Inference took 0.063s, RUL=43.60
+2025-06-12 07:11:17,950 - INFO - Inference took 0.067s, RUL=43.60
+2025-06-12 07:22:40,403 - INFO - Inference took 0.188s, RUL=43.60
+2025-06-12 07:52:05,912 - INFO - Inference took 0.162s, RUL=43.60
