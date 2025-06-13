@@ -152,4 +152,6 @@ curl http://localhost:15000/metrics
 
 ---
 
-## link video: https://drive.google.com/drive/folders/19koIzIvi7LIpKiaKg8X4FdIFUfmtoo5A?usp=sharing
+## Video
+
+[![Watch the video](https://drive.google.com/file/d/1b-6QSMeDsWP5ku0DculEdSMrVSiMaQhN/view?usp=sharing)](https://drive.google.com/file/d/1b-6QSMeDsWP5ku0DculEdSMrVSiMaQhN/view?usp=sharing)
