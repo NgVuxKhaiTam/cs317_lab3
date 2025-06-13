@@ -152,4 +152,4 @@ curl http://localhost:15000/metrics
 
 ---
 
-*README generated to guide deployment and testing of the RUL prediction service with full observability.*
+## link video: https://drive.google.com/drive/folders/19koIzIvi7LIpKiaKg8X4FdIFUfmtoo5A?usp=sharing
